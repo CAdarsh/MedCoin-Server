@@ -10,6 +10,7 @@ const { cleanPaginationID } = require('./cleanPaginationID')
  */
 const getItems = async (req = {}, model = {}, query = {}) => {
   const options = await listInitOptions(req)
+  options.populate = 'approvedList'
   return new Promise((resolve, reject) => {
     model.paginate(query, options, (err, items) => {
       if (err) {

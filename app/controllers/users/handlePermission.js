@@ -11,11 +11,15 @@ const { emailExistsExcludingMyself } = require('../../middleware/emailer')
  */
 const handlePermission = async (req, res) => {
   try {
-    req = matchedData(req)
-    const id = await isIDGood(req.id)
-    const doesEmailExists = await emailExistsExcludingMyself(id, req.email)
-    if (!doesEmailExists) {
-      res.status(200).json(await updateItem(id, User, req))
+    req = req.body
+    const id = await isIDGood(req.userId)
+    // const doesEmailExists = await emailExistsExcludingMyself(id, req.email)
+    if (req.action == 'grant') {
+      const user = await User.updateOne(
+        { _id: req.userId },
+        { $push: { approvedList: req.hospitalID } }
+      )
+      res.send('Hospital Added')
     }
   } catch (error) {
     handleError(res, error)

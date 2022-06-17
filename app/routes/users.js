@@ -91,7 +91,7 @@ router.delete(
 router.post(
   '/permission',
   requireAuth,
-  roleAuthorization(['user']),
+  roleAuthorization(['user', 'admin']),
   trimRequest.all,
   handlePermission
 )
