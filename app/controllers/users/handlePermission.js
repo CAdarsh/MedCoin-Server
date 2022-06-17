@@ -20,6 +20,13 @@ const handlePermission = async (req, res) => {
         { $push: { approvedList: req.hospitalID } }
       )
       res.send('Hospital Added')
+    } else if (req.action == 'revoke') {
+      const user = await User.updateOne(
+        { _id: req.userId },
+        { $pull: { approvedList: req.hospitalID } }
+      )
+      console.log({ user })
+      res.send('Access Revoked')
     }
   } catch (error) {
     handleError(res, error)
