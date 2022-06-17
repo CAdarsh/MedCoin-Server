@@ -7,9 +7,31 @@ const AssetSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    age: {
+      type: String
+    },
+    title: {
+      type: String
+    },
+    desc: {
+      type: String
+    },
+    remarks: {
+      type: String
+    },
+    age: {
+      type: String
+    },
+    sex: {
+      type: String
+    },
+    diagnosedAs: {
+      type: Number
+    },
     owner: { type: mongoose.Types.ObjectId, ref: 'User' },
     author: { type: mongoose.Types.ObjectId, ref: 'User' },
-    accessList: [{ type: mongoose.Types.ObjectId, ref: 'User' }]
+    accessList: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+    link: String
   },
   {
     versionKey: false,
