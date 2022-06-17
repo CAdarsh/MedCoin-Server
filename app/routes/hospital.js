@@ -8,6 +8,7 @@ const requireAuth = passport.authenticate('jwt', {
 const trimRequest = require('trim-request')
 
 const { roleAuthorization } = require('../controllers/auth')
+const { createAsset } = require('../controllers/hospitals/assets')
 
 const {
   getUsers,
@@ -90,5 +91,7 @@ router.delete(
   validateDeleteUser,
   deleteUser
 )
+
+router.post('/asset', requireAuth, trimRequest.all, createAsset)
 
 module.exports = router

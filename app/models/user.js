@@ -9,6 +9,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    assets: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'Asset'
+      }
+    ],
     email: {
       type: String,
       validate: {

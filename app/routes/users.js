@@ -58,7 +58,7 @@ router.post(
 router.get(
   '/:id',
   requireAuth,
-  roleAuthorization(['admin']),
+  // roleAuthorization(['admin', 'user', 'hospital', ]),
   trimRequest.all,
   validateGetUser,
   getUser
