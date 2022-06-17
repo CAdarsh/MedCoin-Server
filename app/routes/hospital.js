@@ -14,16 +14,15 @@ const {
   createUser,
   getUser,
   updateUser,
-  deleteUser,
-  handlePermission
-} = require('../controllers/users')
+  deleteUser
+} = require('../controllers/hospitals')
 
 const {
   validateCreateUser,
   validateGetUser,
   validateUpdateUser,
   validateDeleteUser
-} = require('../controllers/users/validators')
+} = require('../controllers/hospitals/validators')
 
 /*
  * Users routes
@@ -45,8 +44,12 @@ router.get(
  */
 router.post(
   '/',
-  requireAuth,
-  roleAuthorization(['admin']),
+  (req, res, next) => {
+    console.log(req)
+    next()
+  },
+  // requireAuth,
+  // roleAuthorization(['admin']),
   trimRequest.all,
   validateCreateUser,
   createUser
@@ -58,7 +61,7 @@ router.post(
 router.get(
   '/:id',
   requireAuth,
-  roleAuthorization(['admin']),
+  // roleAuthorization(['admin']),
   trimRequest.all,
   validateGetUser,
   getUser
@@ -70,7 +73,7 @@ router.get(
 router.patch(
   '/:id',
   requireAuth,
-  roleAuthorization(['admin', 'user']),
+  // roleAuthorization(['admin']),
   trimRequest.all,
   validateUpdateUser,
   updateUser
@@ -82,18 +85,10 @@ router.patch(
 router.delete(
   '/:id',
   requireAuth,
-  roleAuthorization(['admin']),
+  // roleAuthorization(['admin']),
   trimRequest.all,
   validateDeleteUser,
   deleteUser
-)
-
-router.post(
-  '/permission',
-  requireAuth,
-  roleAuthorization(['user']),
-  trimRequest.all,
-  handlePermission
 )
 
 module.exports = router

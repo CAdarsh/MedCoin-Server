@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
+      enum: ['user', 'admin', 'hospital', 'research'],
       default: 'user'
     },
     verification: {
@@ -74,6 +74,9 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
       select: false
+    },
+    approvedList: {
+      type: [{ type: mongoose.Types.ObjectId, ref: 'User' }]
     }
   },
   {

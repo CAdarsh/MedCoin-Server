@@ -1,36 +1,30 @@
 const { matchedData } = require('express-validator')
-
-const { registerUser, setUserInfo, returnRegisterToken } = require('./helpers')
-
 const { handleError } = require('../../middleware/utils')
 const {
   emailExists,
   sendRegistrationEmailMessage
 } = require('../../middleware/emailer')
+const { createItemInDb } = require('./helpers')
 
 /**
- * Register function called by route
+ * Create item function called by route
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
-const register = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     // Gets locale from header 'Accept-Language'
-    console.log({ req: req.body })
     const locale = req.getLocale()
-    req = req.body
-    console.log({ req2: req })
+    req = matchedData(req)
     const doesEmailExists = await emailExists(req.email)
     if (!doesEmailExists) {
-      const item = await registerUser(req)
-      const userInfo = await setUserInfo(item)
-      const response = await returnRegisterToken(item, userInfo)
+      const item = await createItemInDb(req)
       sendRegistrationEmailMessage(locale, item)
-      res.status(201).json(response)
+      res.status(201).json(item)
     }
   } catch (error) {
     handleError(res, error)
   }
 }
 
-module.exports = { register }
+module.exports = { createUser }

@@ -32,7 +32,16 @@ const {
 /*
  * Register route
  */
-router.post('/register', trimRequest.all, validateRegister, register)
+router.post(
+  '/register',
+  trimRequest.all,
+  validateRegister,
+  (req, res, next) => {
+    console.log({ reqq: req.body })
+    next()
+  },
+  register
+)
 
 /*
  * Verify route

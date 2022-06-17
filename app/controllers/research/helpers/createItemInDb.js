@@ -16,7 +16,6 @@ const createItemInDb = ({
   country = ''
 }) => {
   return new Promise((resolve, reject) => {
-    console.log({role})
     const user = new User({
       name,
       email,

@@ -8,11 +8,13 @@ const { buildErrObject } = require('../../../middleware/utils')
  */
 const registerUser = (req = {}) => {
   return new Promise((resolve, reject) => {
+    console.log({ ...req })
     const user = new User({
       name: req.name,
       email: req.email,
       password: req.password,
-      verification: uuid.v4()
+      verification: uuid.v4(),
+      ...req
     })
     user.save((err, item) => {
       if (err) {
